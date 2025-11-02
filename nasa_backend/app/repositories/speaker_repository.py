@@ -69,11 +69,17 @@ class SpeakerRepository:
     async def media_play_pause(self) -> bool:
         """재생/일시정지 - API 호출"""
         try:
-            logger.info("Calling media play/pause API")
+            logger.info("Calling devices connect API")
+
+            payload = {
+                "address": "b1-21-81-e2-7f-47",
+                "name": "DitooPro-Audio"
+            }
 
             async with httpx.AsyncClient() as client:
                 response = await client.post(
-                    f"{API_BASE_URL}/api/media/play-pause",
+                    f"{API_BASE_URL}/api/devices/connect",
+                    json=payload,
                     timeout=5.0
                 )
 
