@@ -51,41 +51,48 @@ async def send_test_detection(uri: str, detected_action: int, confidence: float,
 async def run_test_scenarios(macbook_ip: str = "localhost", port: int = 8000):
     """다양한 테스트 시나리오 실행"""
 
-    uri = f"ws://{macbook_ip}:{port}/ws/windows"
+    uri = f"ws://{macbook_ip}:{port}/api/v1/predictions/ws/predictions"
 
     print("=" * 80)
     print("🧪 WebSocket 테스트 시나리오")
     print("=" * 80)
 
-    # 시나리오 1: 행동 1 감지 (높은 신뢰도) - 경고음 + 알림
+    # 시나리오 1: 행동 1 감지 (높은 신뢰도) - 재생/일시정지 + 알림
     await send_test_detection(
         uri, 1, 0.95,
-        "행동 1 감지 (95% 신뢰도) - 경고음 + 알림 예상"
+        "행동 1 감지 (95% 신뢰도) - 재생/일시정지 + 알림 예상"
     )
     await asyncio.sleep(2)
 
-    # 시나리오 2: 행동 2 감지 (높은 신뢰도) - 일반음 + 알림
+    # 시나리오 2: 행동 2 감지 (높은 신뢰도) - 다음 트랙 + 알림
     await send_test_detection(
         uri, 2, 0.85,
-        "행동 2 감지 (85% 신뢰도) - 일반음 + 알림 예상"
+        "행동 2 감지 (85% 신뢰도) - 다음 트랙 + 알림 예상"
     )
     await asyncio.sleep(2)
 
-    # 시나리오 3: 행동 3 감지 (높은 신뢰도) - 알림만
+    # 시나리오 3: 행동 3 감지 (높은 신뢰도) - 이전 트랙 + 알림
     await send_test_detection(
         uri, 3, 0.75,
-        "행동 3 감지 (75% 신뢰도) - 알림만 예상"
+        "행동 3 감지 (75% 신뢰도) - 이전 트랙 + 알림 예상"
     )
     await asyncio.sleep(2)
 
-    # 시나리오 4: 행동 1 감지 (낮은 신뢰도) - 무시
+    # 시나리오 4: 행동 4 감지 (높은 신뢰도) - 미디어 정보 표시 + 알림
+    await send_test_detection(
+        uri, 4, 0.80,
+        "행동 4 감지 (80% 신뢰도) - 미디어 정보 표시 + 알림 예상"
+    )
+    await asyncio.sleep(2)
+
+    # 시나리오 5: 행동 1 감지 (낮은 신뢰도) - 무시
     await send_test_detection(
         uri, 1, 0.40,
         "행동 1 감지 (40% 신뢰도) - 낮은 신뢰도로 무시 예상"
     )
     await asyncio.sleep(2)
 
-    # 시나리오 5: 감지 없음 (높은 신뢰도)
+    # 시나리오 6: 감지 없음 (높은 신뢰도)
     await send_test_detection(
         uri, 0, 0.90,
         "감지 없음 (90% 신뢰도) - 아무 동작 안함"
@@ -104,7 +111,7 @@ async def run_continuous_test(
 ):
     """연속 테스트"""
 
-    uri = f"ws://{macbook_ip}:{port}/ws/windows"
+    uri = f"ws://{macbook_ip}:{port}/api/v1/predictions/ws/predictions"
 
     print("=" * 80)
     print(f"🔄 연속 테스트 ({count}회, {interval}초 간격)")
@@ -116,12 +123,13 @@ async def run_continuous_test(
         0: "감지 없음",
         1: "행동 1",
         2: "행동 2",
-        3: "행동 3"
+        3: "행동 3",
+        4: "행동 4"
     }
 
     for i in range(count):
         # 랜덤 행동 ID와 신뢰도 생성
-        detected_action = random.randint(0, 3)
+        detected_action = random.randint(0, 4)
         confidence = random.uniform(0.3, 0.95)
 
         await send_test_detection(
@@ -142,7 +150,7 @@ async def run_continuous_test(
 async def run_action_test(macbook_ip: str = "localhost", port: int = 8000):
     """각 행동별 테스트"""
 
-    uri = f"ws://{macbook_ip}:{port}/ws/windows"
+    uri = f"ws://{macbook_ip}:{port}/api/v1/predictions/ws/predictions"
 
     print("=" * 80)
     print("🎬 행동별 테스트")
@@ -150,9 +158,10 @@ async def run_action_test(macbook_ip: str = "localhost", port: int = 8000):
 
     actions = [
         (0, 0.90, "감지 없음 - 아무 동작 안함"),
-        (1, 0.90, "행동 1 - 경고음 + 알림"),
-        (2, 0.90, "행동 2 - 일반음 + 알림"),
-        (3, 0.90, "행동 3 - 알림만")
+        (1, 0.90, "행동 1 - 재생/일시정지 + 알림"),
+        (2, 0.90, "행동 2 - 다음 트랙 + 알림"),
+        (3, 0.90, "행동 3 - 이전 트랙 + 알림"),
+        (4, 0.90, "행동 4 - 미디어 정보 표시 + 알림")
     ]
 
     for action_id, conf, desc in actions:
@@ -175,7 +184,7 @@ async def main():
 
     # 테스트 모드 선택
     print("테스트 모드 선택:")
-    print("1. 시나리오 테스트 (5가지 시나리오)")
+    print("1. 시나리오 테스트 (6가지 시나리오)")
     print("2. 연속 테스트 (10회 랜덤 전송)")
     print("3. 행동별 테스트 (각 행동 1회씩)")
     print("4. 단일 테스트 (1회만 전송)")
@@ -200,18 +209,19 @@ async def main():
     elif choice == "4":
         print("\n행동 ID 선택:")
         print("  0: 감지 없음")
-        print("  1: 행동 1 (경고음 + 알림)")
-        print("  2: 행동 2 (일반음 + 알림)")
-        print("  3: 행동 3 (알림만)")
+        print("  1: 행동 1 (재생/일시정지 + 알림)")
+        print("  2: 행동 2 (다음 트랙 + 알림)")
+        print("  3: 행동 3 (이전 트랙 + 알림)")
+        print("  4: 행동 4 (미디어 정보 표시 + 알림)")
 
-        action_id = input("행동 ID 입력 (0-3): ").strip()
+        action_id = input("행동 ID 입력 (0-4): ").strip()
         confidence = input("신뢰도 입력 (0.0-1.0, 예: 0.85): ").strip()
 
         try:
             action_id = int(action_id)
             confidence = float(confidence)
 
-            if 0 <= action_id <= 3 and 0.0 <= confidence <= 1.0:
+            if 0 <= action_id <= 4 and 0.0 <= confidence <= 1.0:
                 await send_test_detection(
                     f"ws://{MACBOOK_IP}:{MACBOOK_PORT}/api/v1/predictions/ws/predictions",
                     action_id,
