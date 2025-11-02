@@ -5,11 +5,7 @@ Speaker Repository
 """
 import asyncio
 import logging
-import sys
-import os
-
-# 프로젝트 루트 경로 추가
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), "../.."))
+from typing import Optional
 
 logger = logging.getLogger(__name__)
 
@@ -21,23 +17,11 @@ class SpeakerRepository:
     외부 시스템(Bluetooth)과의 데이터 접근 담당
     """
 
-    def __init__(self):
+    def __init__(self, bluetooth_repo: Optional['BluetoothRepository'] = None):
         self.is_initialized = False
         self.device_address = None
         self.device_name = None
-        # Lazy import to avoid errors if bluetooth module not available
-        self._bt_manager = None
-
-    def _get_bt_manager(self):
-        """Bluetooth Manager lazy initialization"""
-        if self._bt_manager is None:
-            try:
-                from bluetooth_universal_manager import BluetoothUniversalManager
-                self._bt_manager = BluetoothUniversalManager()
-            except ImportError:
-                logger.warning("BluetoothUniversalManager not available")
-                self._bt_manager = None
-        return self._bt_manager
+        self.bluetooth_repo = bluetooth_repo
 
     async def initialize(self, device_address: str = None, device_name: str = None) -> bool:
         """
@@ -51,20 +35,13 @@ class SpeakerRepository:
             bool: 초기화 성공 여부
         """
         try:
-            bt_manager = self._get_bt_manager()
-            if not bt_manager:
+            if not self.bluetooth_repo:
                 logger.info("System media control mode (no Bluetooth)")
                 self.is_initialized = True
                 return True
 
             if device_address and device_name:
-                loop = asyncio.get_event_loop()
-                success = await loop.run_in_executor(
-                    None,
-                    bt_manager.connect_device,
-                    device_address,
-                    device_name
-                )
+                success = self.bluetooth_repo.connect_device(device_address, device_name)
 
                 if success:
                     self.device_address = device_address
@@ -85,15 +62,13 @@ class SpeakerRepository:
             self.is_initialized = False
             return False
 
-    async def play_alert(self) -> bool:
-        """경고음 재생"""
+    async def media_play_pause(self) -> bool:
+        """재생/일시정지"""
         try:
             logger.info("Playing alert sound")
-            bt_manager = self._get_bt_manager()
 
-            if bt_manager:
-                loop = asyncio.get_event_loop()
-                await loop.run_in_executor(None, bt_manager.media_play_pause)
+            if self.bluetooth_repo:
+                self.bluetooth_repo.media_play_pause()
 
             # TODO: 실제 경고음 파일 재생
             return True
@@ -106,11 +81,9 @@ class SpeakerRepository:
         """일반 알림음 재생"""
         try:
             logger.info("Playing normal sound")
-            bt_manager = self._get_bt_manager()
 
-            if bt_manager:
-                loop = asyncio.get_event_loop()
-                await loop.run_in_executor(None, bt_manager.media_play_pause)
+            if self.bluetooth_repo:
+                self.bluetooth_repo.media_play_pause()
 
             return True
 
@@ -122,11 +95,9 @@ class SpeakerRepository:
         """재생 중지"""
         try:
             logger.info("Stopping playback")
-            bt_manager = self._get_bt_manager()
 
-            if bt_manager:
-                loop = asyncio.get_event_loop()
-                await loop.run_in_executor(None, bt_manager.media_play_pause)
+            if self.bluetooth_repo:
+                self.bluetooth_repo.media_play_pause()
 
             return True
 
@@ -138,6 +109,10 @@ class SpeakerRepository:
         """스피커 연결 해제"""
         try:
             logger.info("Disconnecting speaker")
+
+            if self.bluetooth_repo and self.device_address:
+                self.bluetooth_repo.disconnect_device(self.device_address, self.device_name or "Unknown")
+
             self.is_initialized = False
             self.device_address = None
             self.device_name = None

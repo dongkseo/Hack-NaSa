@@ -3,13 +3,8 @@ Phone Repository
 
 안드로이드 핸드폰과의 데이터 접근 계층
 """
-import asyncio
 import logging
-import sys
-import os
-
-# 프로젝트 루트 경로 추가
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), "../.."))
+from typing import Optional
 
 logger = logging.getLogger(__name__)
 
@@ -21,23 +16,11 @@ class PhoneRepository:
     외부 시스템(Bluetooth Android)과의 데이터 접근 담당
     """
 
-    def __init__(self):
+    def __init__(self, bluetooth_repo: Optional['BluetoothRepository'] = None):
         self.is_connected = False
         self.phone_address = None
         self.phone_name = None
-        # Lazy import
-        self._bt_manager = None
-
-    def _get_bt_manager(self):
-        """Bluetooth Manager lazy initialization"""
-        if self._bt_manager is None:
-            try:
-                from bluetooth_universal_manager import BluetoothUniversalManager
-                self._bt_manager = BluetoothUniversalManager()
-            except ImportError:
-                logger.warning("BluetoothUniversalManager not available")
-                self._bt_manager = None
-        return self._bt_manager
+        self.bluetooth_repo = bluetooth_repo
 
     async def connect(self, device_address: str, device_name: str = "Android Phone") -> bool:
         """
@@ -52,20 +35,13 @@ class PhoneRepository:
         """
         try:
             logger.info(f"Connecting to Android '{device_name}'...")
-            bt_manager = self._get_bt_manager()
 
-            if not bt_manager:
+            if not self.bluetooth_repo:
                 logger.warning("Bluetooth not available, using mock mode")
                 self.is_connected = False
                 return False
 
-            loop = asyncio.get_event_loop()
-            success = await loop.run_in_executor(
-                None,
-                bt_manager.connect_device,
-                device_address,
-                device_name
-            )
+            success = self.bluetooth_repo.connect_device(device_address, device_name)
 
             if success:
                 self.is_connected = True
@@ -163,16 +139,9 @@ class PhoneRepository:
                 return True
 
             logger.info(f"Disconnecting Android '{self.phone_name}'...")
-            bt_manager = self._get_bt_manager()
 
-            if bt_manager and self.phone_address:
-                loop = asyncio.get_event_loop()
-                success = await loop.run_in_executor(
-                    None,
-                    bt_manager.disconnect_device,
-                    self.phone_address,
-                    self.phone_name
-                )
+            if self.bluetooth_repo and self.phone_address:
+                success = self.bluetooth_repo.disconnect_device(self.phone_address, self.phone_name or "Unknown")
 
                 if success:
                     self.is_connected = False

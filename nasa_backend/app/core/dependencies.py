@@ -5,6 +5,7 @@ Dependency injection providers using FastAPI's Depends system
 """
 from typing import Annotated
 from fastapi import Depends
+from app.repositories.bluetooth_repository import BluetoothRepository
 from app.repositories.speaker_repository import SpeakerRepository
 from app.repositories.phone_repository import PhoneRepository
 from app.repositories.connection_repository import ConnectionRepository
@@ -12,12 +13,18 @@ from app.services.prediction_service import PredictionService
 
 
 # Repository instances (singleton-like)
-_speaker_repo = SpeakerRepository()
-_phone_repo = PhoneRepository()
+_bluetooth_repo = BluetoothRepository()
+_speaker_repo = SpeakerRepository(bluetooth_repo=_bluetooth_repo)
+_phone_repo = PhoneRepository(bluetooth_repo=_bluetooth_repo)
 _connection_repo = ConnectionRepository()
 
 
 # Repository Dependencies
+def get_bluetooth_repository() -> BluetoothRepository:
+    """블루투스 Repository 의존성"""
+    return _bluetooth_repo
+
+
 def get_speaker_repository() -> SpeakerRepository:
     """스피커 Repository 의존성"""
     return _speaker_repo
@@ -49,6 +56,7 @@ def get_prediction_service(
 
 
 # Type Aliases for cleaner code
+BluetoothRepo = Annotated[BluetoothRepository, Depends(get_bluetooth_repository)]
 SpeakerRepo = Annotated[SpeakerRepository, Depends(get_speaker_repository)]
 PhoneRepo = Annotated[PhoneRepository, Depends(get_phone_repository)]
 ConnectionRepo = Annotated[ConnectionRepository, Depends(get_connection_repository)]

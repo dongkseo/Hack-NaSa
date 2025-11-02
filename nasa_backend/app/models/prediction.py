@@ -11,18 +11,18 @@ from typing import Optional
 class ActionType(IntEnum):
     """감지된 행동 타입"""
     NONE = 0
-    ACTION_1 = 1  # 높은 경고
-    ACTION_2 = 2  # 중간 알림
-    ACTION_3 = 3  # 약한 알림
+    ACTION_1 = 1
+    ACTION_2 = 2
+    ACTION_3 = 3
 
     @property
     def description(self) -> str:
         """행동 설명"""
         descriptions = {
             self.NONE: "감지 없음",
-            self.ACTION_1: "행동 1 (높은 경고)",
-            self.ACTION_2: "행동 2 (중간 알림)",
-            self.ACTION_3: "행동 3 (약한 알림)"
+            self.ACTION_1: "행동 1",
+            self.ACTION_2: "행동 2",
+            self.ACTION_3: "행동 3"
         }
         return descriptions.get(self, "알 수 없음")
 

@@ -53,17 +53,17 @@ class PredictionService:
                 "phone": None,
                 "description": "아무 동작 안함"
             },
-            1: {  # 행동 1 - 높은 경고
-                "speaker": "play_alert",
+            1: {  # 행동 1 - wave
+                "speaker": "media_play_pause",
                 "phone": "notify",
-                "description": "경고음 + 알림"
+                "description": "재생/일시정지"
             },
-            2: {  # 행동 2 - 중간 알림
-                "speaker": "play_normal",
+            2: {  # 행동 2 - 
+                "speaker": "media_next",
                 "phone": "notify",
-                "description": "일반음 + 알림"
+                "description": "다음 트랙"
             },
-            3: {  # 행동 3 - 약한 알림
+            3: {  # 행동 3 - 
                 "speaker": None,
                 "phone": "notify",
                 "description": "알림만"
@@ -196,16 +196,16 @@ class PredictionService:
         스피커 액션 실행
 
         Args:
-            action: 액션 타입 ("play_alert", "play_normal", "stop")
+            action: 액션 타입 ("media_play_pause", "media_next", "stop")
 
         Returns:
             bool: 실행 성공 여부
         """
         try:
-            if action == "play_alert":
-                return await self.speaker_repo.play_alert()
-            elif action == "play_normal":
-                return await self.speaker_repo.play_normal()
+            if action == "media_play_pause":
+                return await self.speaker_repo.media_play_pause()
+            elif action == "media_next":
+                return await self.speaker_repo.media_next()
             elif action == "stop":
                 return await self.speaker_repo.stop()
             return False
