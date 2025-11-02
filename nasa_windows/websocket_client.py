@@ -25,7 +25,7 @@ class WiFiSensingClient:
         """
         Args:
             server_uri: MacBook 허브 WebSocket URI
-                       예: "ws://192.168.0.10:8000/ws/windows"
+                       예: "ws://192.168.0.10:8000/api/v1/predictions/ws/predictions"
         """
         self.server_uri = server_uri
         self.is_connected = False
@@ -143,7 +143,7 @@ async def main():
     MACBOOK_IP = "localhost"  # 또는 "192.168.0.10"
     MACBOOK_PORT = 8000
 
-    server_uri = f"ws://{MACBOOK_IP}:{MACBOOK_PORT}/ws/windows"
+    server_uri = f"ws://{MACBOOK_IP}:{MACBOOK_PORT}/api/v1/predictions/ws/predictions"
 
     client = WiFiSensingClient(server_uri)
 
@@ -153,7 +153,8 @@ async def main():
         import random
 
         # 랜덤 행동 ID (0~3)
-        detected_action = random.randint(0, 3)
+        # detected_action = random.randint(0, 3)
+        detected_action = 1
 
         # 랜덤 신뢰도
         confidence = random.uniform(0.3, 0.95)

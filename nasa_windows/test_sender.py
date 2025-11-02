@@ -171,7 +171,7 @@ async def main():
     MACBOOK_IP = input("MacBook IP 주소 입력 (기본: localhost): ").strip() or "localhost"
     MACBOOK_PORT = 8000
 
-    print(f"\n연결 대상: ws://{MACBOOK_IP}:{MACBOOK_PORT}/ws/windows\n")
+    print(f"\n연결 대상: ws://{MACBOOK_IP}:{MACBOOK_PORT}/api/v1/predictions/ws/predictions\n")
 
     # 테스트 모드 선택
     print("테스트 모드 선택:")
@@ -213,7 +213,7 @@ async def main():
 
             if 0 <= action_id <= 3 and 0.0 <= confidence <= 1.0:
                 await send_test_detection(
-                    f"ws://{MACBOOK_IP}:{MACBOOK_PORT}/ws/windows",
+                    f"ws://{MACBOOK_IP}:{MACBOOK_PORT}/api/v1/predictions/ws/predictions",
                     action_id,
                     confidence,
                     "사용자 입력 테스트"
