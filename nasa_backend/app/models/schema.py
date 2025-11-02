@@ -41,4 +41,3 @@ class ApiResponse(BaseModel):
     success: bool = Field(..., description="성공 여부")
     message: str = Field(..., description="응답 메시지")
     data: Optional[Any] = Field(None, description="응답 데이터")
-

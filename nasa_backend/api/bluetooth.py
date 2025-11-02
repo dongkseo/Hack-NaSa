@@ -86,6 +86,8 @@ async def connect_device(request: ConnectRequest):
     """장치 연결"""
     try:
         success, message = await service.connect_to_device(request)
+
+        success, message = await service.control_media_playback("play_pause")
         
         if success:
             return ApiResponse(
@@ -96,6 +98,18 @@ async def connect_device(request: ConnectRequest):
                     "name": request.name
                 }
             )
+        else:
+            raise HTTPException(status_code=400, detail=message)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+async def media_play_pause():
+    """미디어 재생/일시정지"""
+    try:
+        success, message = await service.control_media_playback("play_pause")
+        
+        if success:
+            return ApiResponse(success=True, message=message)
         else:
             raise HTTPException(status_code=400, detail=message)
     except Exception as e:
