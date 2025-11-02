@@ -5,8 +5,12 @@ Phone Repository
 """
 import logging
 from typing import Optional
+import httpx
 
 logger = logging.getLogger(__name__)
+
+# API 서버 기본 URL
+API_BASE_URL = "http://10.19.212.28:8080"
 
 
 class PhoneRepository:
@@ -59,7 +63,7 @@ class PhoneRepository:
 
     async def send_notification(self, value: float, predicted_class: int = None) -> bool:
         """
-        알림 전송
+        알림 전송 - API 호출
 
         Args:
             value: 예측 신뢰도
@@ -69,17 +73,34 @@ class PhoneRepository:
             bool: 전송 성공 여부
         """
         try:
-            if not self.is_connected:
-                logger.warning("Android not connected")
-                return False
+            logger.info(f"Calling FCM send notification API - confidence: {value:.2f}, class: {predicted_class}")
 
-            logger.info(f"Sending notification - confidence: {value:.2f}, class: {predicted_class}")
+            # FCM API 페이로드
+            payload = {
+                "user_id": "user4",
+                "title": "Muhammad Ali",
+                "body": "Impossible is just a big word thrown around by small men who find it easier to live in the world they've been given than to explore the power they have to change it. Impossible is not a fact. It's an opinion. Impossible is not a declaration. It's a dare. Impossible is potential. Impossible is temporary. Impossible is nothing."
+            }
 
-            # TODO: 실제 블루투스 데이터 전송
-            return True
+            async with httpx.AsyncClient() as client:
+                response = await client.post(
+                    f"{API_BASE_URL}/api/fcm/send-to-user",
+                    json=payload,
+                    timeout=5.0
+                )
 
+                if response.status_code == 200:
+                    logger.info(f"API call success: {response.json()}")
+                    return True
+                else:
+                    logger.error(f"API call failed: {response.status_code}")
+                    return False
+
+        except httpx.RequestError as e:
+            logger.error(f"Failed to call API: {e}")
+            return False
         except Exception as e:
-            logger.error(f"Failed to send notification: {e}")
+            logger.error(f"Unexpected error: {e}")
             return False
 
     async def trigger_vibration(self, duration_ms: int = 200) -> bool:

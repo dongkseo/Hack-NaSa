@@ -10,7 +10,7 @@ from typing import Optional, List
 class PredictionRequest(BaseModel):
     """예측 요청 스키마 (DTO)"""
     type: str = Field(default="prediction", description="메시지 타입")
-    detected_action: int = Field(..., ge=0, le=3, description="감지된 행동 ID (0-3)")
+    detected_action: int = Field(..., ge=0, le=4, description="감지된 행동 ID (0-4)")
     confidence: float = Field(..., ge=0.0, le=1.0, description="신뢰도 (0.0-1.0)")
     timestamp: float = Field(..., gt=0, description="타임스탬프")
     metadata: Optional[dict] = Field(None, description="추가 메타데이터")

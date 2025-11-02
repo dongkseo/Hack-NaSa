@@ -6,8 +6,12 @@ Speaker Repository
 import asyncio
 import logging
 from typing import Optional
+import httpx
 
 logger = logging.getLogger(__name__)
+
+# API 서버 기본 URL
+API_BASE_URL = "http://10.19.212.28:8080"
 
 
 class SpeakerRepository:
@@ -63,18 +67,28 @@ class SpeakerRepository:
             return False
 
     async def media_play_pause(self) -> bool:
-        """재생/일시정지"""
+        """재생/일시정지 - API 호출"""
         try:
-            logger.info("Playing alert sound")
+            logger.info("Calling media play/pause API")
 
-            if self.bluetooth_repo:
-                self.bluetooth_repo.media_play_pause()
+            async with httpx.AsyncClient() as client:
+                response = await client.post(
+                    f"{API_BASE_URL}/api/media/play-pause",
+                    timeout=5.0
+                )
 
-            # TODO: 실제 경고음 파일 재생
-            return True
+                if response.status_code == 200:
+                    logger.info(f"API call success: {response.json()}")
+                    return True
+                else:
+                    logger.error(f"API call failed: {response.status_code}")
+                    return False
 
+        except httpx.RequestError as e:
+            logger.error(f"Failed to call API: {e}")
+            return False
         except Exception as e:
-            logger.error(f"Failed to play alert: {e}")
+            logger.error(f"Unexpected error: {e}")
             return False
 
     async def play_normal(self) -> bool:
@@ -92,31 +106,53 @@ class SpeakerRepository:
             return False
 
     async def media_next(self) -> bool:
-        """다음 트랙 재생"""
+        """다음 트랙 재생 - API 호출"""
         try:
-            logger.info("Next track")
+            logger.info("Calling media next API")
 
-            if self.bluetooth_repo:
-                self.bluetooth_repo.media_next()
+            async with httpx.AsyncClient() as client:
+                response = await client.post(
+                    f"{API_BASE_URL}/api/media/next",
+                    timeout=5.0
+                )
 
-            return True
+                if response.status_code == 200:
+                    logger.info(f"API call success: {response.json()}")
+                    return True
+                else:
+                    logger.error(f"API call failed: {response.status_code}")
+                    return False
 
+        except httpx.RequestError as e:
+            logger.error(f"Failed to call API: {e}")
+            return False
         except Exception as e:
-            logger.error(f"Failed to play next track: {e}")
+            logger.error(f"Unexpected error: {e}")
             return False
 
     async def media_previous(self) -> bool:
-        """이전 트랙 재생"""
+        """이전 트랙 재생 - API 호출"""
         try:
-            logger.info("Previous track")
+            logger.info("Calling media previous API")
 
-            if self.bluetooth_repo:
-                self.bluetooth_repo.media_previous()
+            async with httpx.AsyncClient() as client:
+                response = await client.post(
+                    f"{API_BASE_URL}/api/media/previous",
+                    timeout=5.0
+                )
 
-            return True
+                if response.status_code == 200:
+                    logger.info(f"API call success: {response.json()}")
+                    return True
+                else:
+                    logger.error(f"API call failed: {response.status_code}")
+                    return False
 
+        except httpx.RequestError as e:
+            logger.error(f"Failed to call API: {e}")
+            return False
         except Exception as e:
-            logger.error(f"Failed to play previous track: {e}")
+            logger.error(f"Unexpected error: {e}")
             return False
 
     async def media_info(self) -> bool:
