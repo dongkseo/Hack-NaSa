@@ -55,17 +55,17 @@ class PredictionService:
             },
             1: {  # 행동 1 - wave
                 "speaker": "media_play_pause",
-                "phone": "notify",
+                "phone": None,
                 "description": "재생/일시정지"
             },
             2: {  # 행동 2 -
                 "speaker": "media_next",
-                "phone": "notify",
+                "phone": None,
                 "description": "다음 트랙"
             },
             3: {  # 행동 3 -
                 "speaker": "media_previous",
-                "phone": "notify",
+                "phone": None,
                 "description": "이전 트랙"
             },
             4: {  # 행동 4 -
@@ -105,7 +105,7 @@ class PredictionService:
 
             logger.info(
                 f"Processing prediction: {prediction.action_name} "
-                f"(confidence: {prediction.confidence:.2%})"
+                # f"(confidence: {prediction.confidence:.2%})"
             )
 
             # 2. 통계 업데이트
