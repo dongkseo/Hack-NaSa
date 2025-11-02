@@ -58,15 +58,20 @@ class PredictionService:
                 "phone": "notify",
                 "description": "재생/일시정지"
             },
-            2: {  # 행동 2 - 
+            2: {  # 행동 2 -
                 "speaker": "media_next",
                 "phone": "notify",
                 "description": "다음 트랙"
             },
-            3: {  # 행동 3 - 
-                "speaker": None,
+            3: {  # 행동 3 -
+                "speaker": "media_previous",
                 "phone": "notify",
-                "description": "알림만"
+                "description": "이전 트랙"
+            },
+            4: {  # 행동 4 -
+                "speaker": "media_info",
+                "phone": "notify",
+                "description": "재생 중인 미디어 정보 표시"
             }
         }
 
@@ -81,7 +86,7 @@ class PredictionService:
         예측 결과 처리
 
         Args:
-            detected_action: 감지된 행동 ID (0-3)
+            detected_action: 감지된 행동 ID (0-4)
             confidence: 신뢰도 (0.0-1.0)
             timestamp: 타임스탬프
             metadata: 추가 메타데이터
@@ -196,7 +201,7 @@ class PredictionService:
         스피커 액션 실행
 
         Args:
-            action: 액션 타입 ("media_play_pause", "media_next", "stop")
+            action: 액션 타입 ("media_play_pause", "media_next", "media_previous", "media_info",  "stop")
 
         Returns:
             bool: 실행 성공 여부
@@ -206,6 +211,10 @@ class PredictionService:
                 return await self.speaker_repo.media_play_pause()
             elif action == "media_next":
                 return await self.speaker_repo.media_next()
+            elif action == "media_previous":
+                return await self.speaker_repo.media_previous()
+            elif action == "media_info":
+                return await self.speaker_repo.media_info()
             elif action == "stop":
                 return await self.speaker_repo.stop()
             return False

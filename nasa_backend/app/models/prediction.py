@@ -14,6 +14,7 @@ class ActionType(IntEnum):
     ACTION_1 = 1
     ACTION_2 = 2
     ACTION_3 = 3
+    ACTION_4 = 4
 
     @property
     def description(self) -> str:
@@ -22,7 +23,8 @@ class ActionType(IntEnum):
             self.NONE: "감지 없음",
             self.ACTION_1: "행동 1",
             self.ACTION_2: "행동 2",
-            self.ACTION_3: "행동 3"
+            self.ACTION_3: "행동 3",
+            self.ACTION_4: "행동 4"
         }
         return descriptions.get(self, "알 수 없음")
 
@@ -33,7 +35,7 @@ class Prediction:
     예측 결과 도메인 모델
 
     비즈니스 규칙:
-    - detected_action은 0-3 범위
+    - detected_action은 0-4 범위
     - confidence는 0.0-1.0 범위
     """
     detected_action: int
@@ -43,7 +45,7 @@ class Prediction:
 
     def __post_init__(self):
         """생성 후 검증"""
-        if not 0 <= self.detected_action <= 3:
+        if not 0 <= self.detected_action <= 4:
             raise ValueError(f"Invalid detected_action: {self.detected_action}")
         if not 0.0 <= self.confidence <= 1.0:
             raise ValueError(f"Invalid confidence: {self.confidence}")

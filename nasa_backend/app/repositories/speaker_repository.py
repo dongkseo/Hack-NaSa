@@ -91,6 +91,48 @@ class SpeakerRepository:
             logger.error(f"Failed to play normal sound: {e}")
             return False
 
+    async def media_next(self) -> bool:
+        """다음 트랙 재생"""
+        try:
+            logger.info("Next track")
+
+            if self.bluetooth_repo:
+                self.bluetooth_repo.media_next()
+
+            return True
+
+        except Exception as e:
+            logger.error(f"Failed to play next track: {e}")
+            return False
+
+    async def media_previous(self) -> bool:
+        """이전 트랙 재생"""
+        try:
+            logger.info("Previous track")
+
+            if self.bluetooth_repo:
+                self.bluetooth_repo.media_previous()
+
+            return True
+
+        except Exception as e:
+            logger.error(f"Failed to play previous track: {e}")
+            return False
+
+    async def media_info(self) -> bool:
+        """재생중인 트랙 정보"""
+        try:
+            logger.info("Now playing info")
+
+            if self.bluetooth_repo:
+                self.bluetooth_repo.get_now_playing_info()
+
+            return True
+
+        except Exception as e:
+            logger.error(f"Failed to play previous track: {e}")
+            return False
+
     async def stop(self) -> bool:
         """재생 중지"""
         try:
