@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1077935205377",
+    "project_id": "nasa-2b926",
+    "storage_bucket": "nasa-2b926.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1077935205377:android:8addf21e66cadc23f7e400",
+        "android_client_info": {
+          "package_name": "com.hoslim.nasa"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBP0QMThG8yX8AQE4fxLNlLVnlzuBKZyTY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

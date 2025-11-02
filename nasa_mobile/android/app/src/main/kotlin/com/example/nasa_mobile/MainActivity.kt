@@ -1,4 +1,4 @@
-package com.example.nasa_mobile
+package com.hoslim.nasa
 
 import io.flutter.embedding.android.FlutterActivity
 
