@@ -1,0 +1,208 @@
+Configuration loaded:
+  Data directory: /home/dongkseo/SHARPax/data
+  Gestures: ['idle', 'wave', 'circle', 'dance']
+  Device: cpu
+  Model save directory: /home/dongkseo/SHARPax/Python_code/4class_model/models
+======================================================================
+GESTURE RECOGNITION TRAINING
+======================================================================
+
+[1/6] Loading data...
+
+Loading gesture data from: /home/dongkseo/SHARPax/data
+======================================================================
+
+[IDLE]
+  Found 39 files
+  Generated 7118 training samples
+
+[WAVE]
+  Found 40 files
+  Generated 6696 training samples
+
+[CIRCLE]
+  Found 20 files
+  Generated 420 training samples
+
+[DANCE]
+  Found 18 files
+  Generated 2142 training samples
+
+======================================================================
+TOTAL: 16376 samples
+  idle: 7118 samples (43.5%)
+  wave: 6696 samples (40.9%)
+  circle: 420 samples (2.6%)
+  dance: 2142 samples (13.1%)
+======================================================================
+
+Final data shape:
+  X: (16376, 29, 100)
+  y: (16376,)
+
+[2/6] Creating dataloaders...
+
+Data split:
+  Train: 13100 samples
+  Val:   3276 samples
+
+Class weights:
+  idle: 0.575
+  wave: 0.611
+  circle: 9.748
+  dance: 1.911
+
+[3/6] Creating model...
+Total parameters: 309,572
+
+[4/6] Training model...
+======================================================================
+Epoch [1/50] (3.2s) | Train Loss: 1.3564 Acc: 0.3298 | Val Loss: 1.3265 Acc: 0.3355 | LR: 0.001000
+Validation accuracy increased (0.0000 --> 0.3355). Saving model...
+Epoch [2/50] (3.2s) | Train Loss: 1.2744 Acc: 0.3668 | Val Loss: 1.2546 Acc: 0.2988 | LR: 0.001000
+EarlyStopping counter: 1/10
+Epoch [3/50] (3.2s) | Train Loss: 1.1714 Acc: 0.3896 | Val Loss: 1.2234 Acc: 0.3410 | LR: 0.001000
+Validation accuracy increased (0.3355 --> 0.3410). Saving model...
+Epoch [4/50] (3.1s) | Train Loss: 1.0845 Acc: 0.4112 | Val Loss: 1.1308 Acc: 0.3742 | LR: 0.001000
+Validation accuracy increased (0.3410 --> 0.3742). Saving model...
+Epoch [5/50] (3.2s) | Train Loss: 0.9429 Acc: 0.4544 | Val Loss: 1.1031 Acc: 0.4298 | LR: 0.001000
+Validation accuracy increased (0.3742 --> 0.4298). Saving model...
+Epoch [6/50] (3.2s) | Train Loss: 0.8331 Acc: 0.4898 | Val Loss: 1.0242 Acc: 0.4332 | LR: 0.001000
+Validation accuracy increased (0.4298 --> 0.4332). Saving model...
+Epoch [7/50] (3.3s) | Train Loss: 0.7648 Acc: 0.5237 | Val Loss: 0.9445 Acc: 0.4811 | LR: 0.001000
+Validation accuracy increased (0.4332 --> 0.4811). Saving model...
+Epoch [8/50] (3.4s) | Train Loss: 0.6582 Acc: 0.5629 | Val Loss: 0.8775 Acc: 0.4997 | LR: 0.001000
+Validation accuracy increased (0.4811 --> 0.4997). Saving model...
+Epoch [9/50] (3.3s) | Train Loss: 0.5740 Acc: 0.6038 | Val Loss: 0.8548 Acc: 0.5201 | LR: 0.001000
+Validation accuracy increased (0.4997 --> 0.5201). Saving model...
+Epoch [10/50] (3.3s) | Train Loss: 0.5175 Acc: 0.6408 | Val Loss: 0.9105 Acc: 0.5391 | LR: 0.001000
+Validation accuracy increased (0.5201 --> 0.5391). Saving model...
+Epoch [11/50] (3.3s) | Train Loss: 0.5070 Acc: 0.6560 | Val Loss: 0.8420 Acc: 0.5870 | LR: 0.001000
+Validation accuracy increased (0.5391 --> 0.5870). Saving model...
+Epoch [12/50] (3.3s) | Train Loss: 0.4341 Acc: 0.7031 | Val Loss: 0.7881 Acc: 0.5940 | LR: 0.001000
+Validation accuracy increased (0.5870 --> 0.5940). Saving model...
+Epoch [13/50] (3.3s) | Train Loss: 0.3952 Acc: 0.7315 | Val Loss: 0.7708 Acc: 0.6184 | LR: 0.001000
+Validation accuracy increased (0.5940 --> 0.6184). Saving model...
+Epoch [14/50] (3.3s) | Train Loss: 0.3778 Acc: 0.7585 | Val Loss: 0.9361 Acc: 0.5928 | LR: 0.001000
+EarlyStopping counter: 1/10
+Epoch [15/50] (3.3s) | Train Loss: 0.3750 Acc: 0.7648 | Val Loss: 0.7232 Acc: 0.6535 | LR: 0.001000
+Validation accuracy increased (0.6184 --> 0.6535). Saving model...
+Epoch [16/50] (3.4s) | Train Loss: 0.3134 Acc: 0.8068 | Val Loss: 0.7073 Acc: 0.6795 | LR: 0.001000
+Validation accuracy increased (0.6535 --> 0.6795). Saving model...
+Epoch [17/50] (3.4s) | Train Loss: 0.2564 Acc: 0.8434 | Val Loss: 0.7538 Acc: 0.6871 | LR: 0.001000
+Validation accuracy increased (0.6795 --> 0.6871). Saving model...
+Epoch [18/50] (3.4s) | Train Loss: 0.2388 Acc: 0.8612 | Val Loss: 0.6772 Acc: 0.6926 | LR: 0.001000
+Validation accuracy increased (0.6871 --> 0.6926). Saving model...
+Epoch [19/50] (3.4s) | Train Loss: 0.2308 Acc: 0.8712 | Val Loss: 0.7245 Acc: 0.7063 | LR: 0.001000
+Validation accuracy increased (0.6926 --> 0.7063). Saving model...
+Epoch [20/50] (3.4s) | Train Loss: 0.2041 Acc: 0.8876 | Val Loss: 0.6426 Acc: 0.7054 | LR: 0.001000
+EarlyStopping counter: 1/10
+Epoch [21/50] (3.4s) | Train Loss: 0.1620 Acc: 0.9107 | Val Loss: 0.7555 Acc: 0.7164 | LR: 0.001000
+Validation accuracy increased (0.7063 --> 0.7164). Saving model...
+Epoch [22/50] (3.4s) | Train Loss: 0.2132 Acc: 0.8869 | Val Loss: 0.6551 Acc: 0.7500 | LR: 0.001000
+Validation accuracy increased (0.7164 --> 0.7500). Saving model...
+Epoch [23/50] (3.4s) | Train Loss: 0.1999 Acc: 0.8942 | Val Loss: 0.6393 Acc: 0.7613 | LR: 0.001000
+Validation accuracy increased (0.7500 --> 0.7613). Saving model...
+Epoch [24/50] (3.2s) | Train Loss: 0.1299 Acc: 0.9319 | Val Loss: 0.5657 Acc: 0.7738 | LR: 0.001000
+Validation accuracy increased (0.7613 --> 0.7738). Saving model...
+Epoch [25/50] (3.2s) | Train Loss: 0.1311 Acc: 0.9330 | Val Loss: 0.5662 Acc: 0.7735 | LR: 0.001000
+EarlyStopping counter: 1/10
+Epoch [26/50] (3.5s) | Train Loss: 0.1372 Acc: 0.9291 | Val Loss: 0.5687 Acc: 0.7940 | LR: 0.001000
+Validation accuracy increased (0.7738 --> 0.7940). Saving model...
+Epoch [27/50] (3.4s) | Train Loss: 0.1346 Acc: 0.9324 | Val Loss: 0.6167 Acc: 0.7836 | LR: 0.001000
+EarlyStopping counter: 1/10
+Epoch [28/50] (3.4s) | Train Loss: 0.0960 Acc: 0.9515 | Val Loss: 0.6855 Acc: 0.7698 | LR: 0.001000
+EarlyStopping counter: 2/10
+Epoch [29/50] (3.4s) | Train Loss: 0.0882 Acc: 0.9555 | Val Loss: 0.6398 Acc: 0.7979 | LR: 0.001000
+Validation accuracy increased (0.7940 --> 0.7979). Saving model...
+Epoch [30/50] (3.4s) | Train Loss: 0.1075 Acc: 0.9482 | Val Loss: 0.6145 Acc: 0.7955 | LR: 0.000500
+EarlyStopping counter: 1/10
+Epoch [31/50] (3.4s) | Train Loss: 0.0693 Acc: 0.9683 | Val Loss: 0.4917 Acc: 0.8355 | LR: 0.000500
+Validation accuracy increased (0.7979 --> 0.8355). Saving model...
+Epoch [32/50] (3.4s) | Train Loss: 0.0443 Acc: 0.9795 | Val Loss: 0.4940 Acc: 0.8376 | LR: 0.000500
+Validation accuracy increased (0.8355 --> 0.8376). Saving model...
+Epoch [33/50] (3.4s) | Train Loss: 0.0379 Acc: 0.9832 | Val Loss: 0.5161 Acc: 0.8318 | LR: 0.000500
+EarlyStopping counter: 1/10
+Epoch [34/50] (3.4s) | Train Loss: 0.0324 Acc: 0.9867 | Val Loss: 0.4570 Acc: 0.8324 | LR: 0.000500
+EarlyStopping counter: 2/10
+Epoch [35/50] (3.4s) | Train Loss: 0.0339 Acc: 0.9847 | Val Loss: 0.5463 Acc: 0.8437 | LR: 0.000500
+Validation accuracy increased (0.8376 --> 0.8437). Saving model...
+Epoch [36/50] (3.4s) | Train Loss: 0.0352 Acc: 0.9843 | Val Loss: 0.5506 Acc: 0.8391 | LR: 0.000500
+EarlyStopping counter: 1/10
+Epoch [37/50] (3.4s) | Train Loss: 0.0329 Acc: 0.9850 | Val Loss: 0.5104 Acc: 0.8294 | LR: 0.000500
+EarlyStopping counter: 2/10
+Epoch [38/50] (3.6s) | Train Loss: 0.0422 Acc: 0.9804 | Val Loss: 0.5707 Acc: 0.8376 | LR: 0.000500
+EarlyStopping counter: 3/10
+Epoch [39/50] (3.6s) | Train Loss: 0.0358 Acc: 0.9853 | Val Loss: 0.5336 Acc: 0.8400 | LR: 0.000500
+EarlyStopping counter: 4/10
+Epoch [40/50] (3.9s) | Train Loss: 0.0289 Acc: 0.9863 | Val Loss: 0.5061 Acc: 0.8498 | LR: 0.000250
+Validation accuracy increased (0.8437 --> 0.8498). Saving model...
+Epoch [41/50] (3.5s) | Train Loss: 0.0194 Acc: 0.9911 | Val Loss: 0.5013 Acc: 0.8584 | LR: 0.000250
+Validation accuracy increased (0.8498 --> 0.8584). Saving model...
+Epoch [42/50] (3.5s) | Train Loss: 0.0161 Acc: 0.9936 | Val Loss: 0.5060 Acc: 0.8648 | LR: 0.000250
+Validation accuracy increased (0.8584 --> 0.8648). Saving model...
+Epoch [43/50] (3.6s) | Train Loss: 0.0142 Acc: 0.9942 | Val Loss: 0.5321 Acc: 0.8526 | LR: 0.000250
+EarlyStopping counter: 1/10
+Epoch [44/50] (3.5s) | Train Loss: 0.0139 Acc: 0.9940 | Val Loss: 0.5514 Acc: 0.8611 | LR: 0.000250
+EarlyStopping counter: 2/10
+Epoch [45/50] (3.5s) | Train Loss: 0.0144 Acc: 0.9934 | Val Loss: 0.5371 Acc: 0.8706 | LR: 0.000250
+Validation accuracy increased (0.8648 --> 0.8706). Saving model...
+Epoch [46/50] (3.4s) | Train Loss: 0.0117 Acc: 0.9960 | Val Loss: 0.5345 Acc: 0.8651 | LR: 0.000125
+EarlyStopping counter: 1/10
+Epoch [47/50] (3.4s) | Train Loss: 0.0109 Acc: 0.9958 | Val Loss: 0.4781 Acc: 0.8690 | LR: 0.000125
+EarlyStopping counter: 2/10
+Epoch [48/50] (3.5s) | Train Loss: 0.0094 Acc: 0.9963 | Val Loss: 0.5291 Acc: 0.8675 | LR: 0.000125
+EarlyStopping counter: 3/10
+Epoch [49/50] (3.5s) | Train Loss: 0.0082 Acc: 0.9967 | Val Loss: 0.5275 Acc: 0.8700 | LR: 0.000125
+EarlyStopping counter: 4/10
+Epoch [50/50] (3.4s) | Train Loss: 0.0087 Acc: 0.9966 | Val Loss: 0.5149 Acc: 0.8736 | LR: 0.000125
+Validation accuracy increased (0.8706 --> 0.8736). Saving model...
+======================================================================
+Training completed in 169.2s (2.8m)
+
+[5/6] Loading best model...
+
+[6/6] Final evaluation...
+======================================================================
+
+Train Accuracy: 100.00%
+Val Accuracy: 87.36%
+
+Per-class Accuracy (Validation):
+  idle: 88.69% (1424 samples)
+  wave: 86.79% (1340 samples)
+  circle: 85.71% (84 samples)
+  dance: 85.05% (428 samples)
+
+Confusion Matrix (Validation):
+           Predicted
+             idle    wave  circle   dance
+Actual  idle    1263     136       7      18
+Actual  wave     152    1163       3      22
+Actual circle       5       4      72       3
+Actual dance      26      37       1     364
+
+Classification Report (Validation):
+              precision    recall  f1-score   support
+
+        idle     0.8734    0.8869    0.8801      1424
+        wave     0.8679    0.8679    0.8679      1340
+      circle     0.8675    0.8571    0.8623        84
+       dance     0.8943    0.8505    0.8719       428
+
+    accuracy                         0.8736      3276
+   macro avg     0.8758    0.8656    0.8705      3276
+weighted avg     0.8738    0.8736    0.8736      3276
+
+======================================================================
+✓ Model saved to: /home/dongkseo/SHARPax/Python_code/4class_model/models/gesture_model.pth
+======================================================================
+✓ Training history saved to: /home/dongkseo/SHARPax/Python_code/4class_model/models/training_history.pth
+
+======================================================================
+TRAINING COMPLETE!
+======================================================================
+
+Next steps:
+1. Run real-time inference:
+   python3 realtime_inference.py
