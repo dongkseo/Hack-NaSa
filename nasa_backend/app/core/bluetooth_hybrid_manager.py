@@ -404,7 +404,7 @@ class BluetoothHybridManager:
             return False
     
     def media_info(self) -> bool:
-        """현재 재생 중인 미디어 정보 표시"""
+        """내 스마트폰 찾기"""
         try:
             print("\n🎵 현재 재생 중:")
             print("=" * 80)
