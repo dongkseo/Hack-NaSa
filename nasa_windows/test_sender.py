@@ -173,6 +173,60 @@ async def run_action_test(macbook_ip: str = "localhost", port: int = 8000):
     print("=" * 80)
 
 
+async def run_interactive_mode(macbook_ip: str = "localhost", port: int = 8000):
+    """대화형 테스트 모드 - 무한 루프로 계속 입력 받음"""
+
+    uri = f"ws://{macbook_ip}:{port}/api/v1/predictions/ws/predictions"
+
+    print("=" * 80)
+    print("💬 대화형 테스트 모드")
+    print("=" * 80)
+    print("\n행동 ID를 입력하세요 (Ctrl+C로 종료):")
+    print("  0: 감지 없음")
+    print("  1: 행동 1 (재생/일시정지 + 알림)")
+    print("  2: 행동 2 (다음 트랙 + 알림)")
+    print("  3: 행동 3 (이전 트랙 + 알림)")
+    print("  4: 행동 4 (미디어 정보 표시 + 알림)")
+    print("=" * 80)
+
+    action_names = {
+        0: "감지 없음",
+        1: "재생/일시정지",
+        2: "다음 트랙",
+        3: "이전 트랙",
+        4: "미디어 정보 표시"
+    }
+
+    while True:
+        try:
+            # 행동 ID 입력 받기
+            action_input = input("\n행동 ID (0-4): ").strip()
+
+            if not action_input:
+                continue
+
+            try:
+                action_id = int(action_input)
+
+                if 0 <= action_id <= 4:
+                    # 기본 신뢰도 0.9로 전송
+                    await send_test_detection(
+                        uri,
+                        action_id,
+                        0.9,
+                        f"{action_names[action_id]} 테스트"
+                    )
+                else:
+                    print("❌ 0-4 사이의 숫자를 입력하세요")
+
+            except ValueError:
+                print("❌ 숫자를 입력하세요")
+
+        except KeyboardInterrupt:
+            print("\n\n⏹️ 대화형 모드 종료")
+            break
+
+
 async def main():
     """메인 함수"""
 
@@ -188,8 +242,9 @@ async def main():
     print("2. 연속 테스트 (10회 랜덤 전송)")
     print("3. 행동별 테스트 (각 행동 1회씩)")
     print("4. 단일 테스트 (1회만 전송)")
+    print("5. 대화형 모드 (계속 입력 받기, Ctrl+C로 종료)")
 
-    choice = input("\n선택 (1/2/3/4): ").strip()
+    choice = input("\n선택 (1/2/3/4/5): ").strip()
 
     if choice == "1":
         await run_test_scenarios(MACBOOK_IP, MACBOOK_PORT)
@@ -232,6 +287,9 @@ async def main():
                 print("❌ 잘못된 범위")
         except:
             print("❌ 잘못된 입력 형식")
+
+    elif choice == "5":
+        await run_interactive_mode(MACBOOK_IP, MACBOOK_PORT)
 
     else:
         print("❌ 잘못된 선택")
