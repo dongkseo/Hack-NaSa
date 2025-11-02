@@ -71,7 +71,7 @@ class PredictionService:
             4: {  # 행동 4 -
                 "speaker": "media_info",
                 "phone": "notify",
-                "description": "재생 중인 미디어 정보 표시"
+                "description": "내 스마트폰 찾기"
             }
         }
 

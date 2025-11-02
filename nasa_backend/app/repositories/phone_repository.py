@@ -78,8 +78,8 @@ class PhoneRepository:
             # FCM API 페이로드
             payload = {
                 "user_id": "user4",
-                "title": "Muhammad Ali",
-                "body": "Impossible is just a big word thrown around by small men who find it easier to live in the world they've been given than to explore the power they have to change it. Impossible is not a fact. It's an opinion. Impossible is not a declaration. It's a dare. Impossible is potential. Impossible is temporary. Impossible is nothing."
+                "title": "스마트폰 알림",
+                "body": "와이파이 센서에서 보낸 알림"
             }
 
             async with httpx.AsyncClient() as client:
