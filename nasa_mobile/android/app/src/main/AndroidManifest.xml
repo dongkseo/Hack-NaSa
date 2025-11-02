@@ -28,6 +28,10 @@
                  the Android process has started. This theme is visible to the user
                  while the Flutter UI initializes. After that, this theme continues
                  to determine the Window background behind the Flutter UI. -->
+            <service
+                android:name="com.pravera.flutter_foreground_task.service.ForegroundService"
+                android:exported="false"
+                android:foregroundServiceType="location|mediaPlayback" />
             <meta-data
               android:name="io.flutter.embedding.android.NormalTheme"
               android:resource="@style/NormalTheme"
