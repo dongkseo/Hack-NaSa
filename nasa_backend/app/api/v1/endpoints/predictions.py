@@ -68,7 +68,7 @@ async def websocket_prediction_endpoint(
 
                 logger.info(
                     f"Received prediction: action={prediction_request.detected_action}, "
-                    f"confidence={prediction_request.confidence:.2%}"
+                    # f"confidence={prediction_request.confidence:.2%}"
                 )
 
                 # 서비스를 통해 비즈니스 로직 실행

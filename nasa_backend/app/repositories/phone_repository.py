@@ -73,7 +73,7 @@ class PhoneRepository:
             bool: 전송 성공 여부
         """
         try:
-            logger.info(f"Calling FCM send notification API - confidence: {value:.2f}, class: {predicted_class}")
+            logger.info(f"Calling FCM send notification API")
 
             # FCM API 페이로드
             payload = {
